@@ -11,9 +11,10 @@
 
   boot.loader.grub = {
     enable = true;
+    efiSupport = true;
     mirroredBoots = [
       {
-        devices = ["/dev/nvme0n1" "/dev/nvme1n1"];
+        devices = ["/dev/nvme0n1"];
         path = "/boot";
       }
     ];
