@@ -3,7 +3,13 @@
     ./disk-config.nix
   ];
 
-  boot.loader.grub.enable = true;
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    grub = {
+      enable = true;
+      efiSupport = true;
+    };
+  };
 
   services.openssh = {
     enable = true;
