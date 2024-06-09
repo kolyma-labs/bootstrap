@@ -2,12 +2,21 @@
   imports = [
     ./disk-config.nix
   ];
-  boot.loader = {
-    efi.canTouchEfiVariables = true;
-    grub = {
-      enable = true;
-      efiSupport = true;
-    };
+  boot.swraid = {
+    enable = true;
+    mdadmConf = ''
+      MAILADDR sakhib@orzklv.uz
+    '';
+  };
+
+  boot.loader.grub = {
+    enable = true;
+    mirroredBoots = [
+      {
+        devices = ["/dev/nvme0n1" "/dev/nvme1n1"];
+        path = "/boot";
+      }
+    ];
   };
 
   services.openssh = {
