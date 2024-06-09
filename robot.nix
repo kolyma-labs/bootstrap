@@ -11,12 +11,12 @@
 
   boot.loader.grub = {
     enable = true;
-    mirroredBoots = [
-      {
-        devices = ["/dev/nvme0n1" "/dev/nvme1n1"];
-        path = "/boot";
-      }
-    ];
+    # mirroredBoots = [
+    #   {
+    #     devices = ["/dev/nvme0n1" "/dev/nvme1n1"];
+    #     path = "/boot";
+    #   }
+    # ];
   };
 
   services.openssh = {
