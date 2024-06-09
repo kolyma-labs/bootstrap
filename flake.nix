@@ -1,12 +1,12 @@
 {
   description = "NixOS configuration for affecting servers";
 
-  # NixOS 22.11 (idk why, kexec works fine with 22.11)
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+  # NixOS 24.05
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
   inputs.nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
   # Home Manager
-  inputs.home-manager.url = "github:nix-community/home-manager/release-22.11";
+  inputs.home-manager.url = "github:nix-community/home-manager/release-24.05";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
   # Nix User Repository
