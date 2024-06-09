@@ -10,6 +10,7 @@
             BOOT = {
               size = "1M";
               type = "EF02";
+              priority = 1;
             };
             ESP = {
               size = "500M";
@@ -20,7 +21,7 @@
               };
             };
             SWAP = {
-              size = "32G";
+              size = "64G";
               content = {
                 type = "mdraid";
                 name = "plainSwap";
@@ -55,7 +56,7 @@
               };
             };
             SWAP = {
-              size = "32G";
+              size = "64G";
               content = {
                 type = "mdraid";
                 name = "plainSwap";
