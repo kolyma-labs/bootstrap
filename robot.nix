@@ -9,16 +9,19 @@
     '';
   };
 
-  boot.loader.grub = {
-    enable = true;
-    efiSupport = true;
-    mirroredBoots = [
-      {
-        devices = ["/dev/nvme0n1"];
-        path = "/boot";
-      }
-    ];
-  };
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    grub = {
+      enable = true;
+      efiSupport = true;
+      useOSProber = true;
+      mirroredBoots = [
+        {
+          devices = ["/dev/nvme0n1"];
+          path = "/boot";
+        }
+      ];
+    };
 
   services.openssh = {
     enable = true;
