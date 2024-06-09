@@ -1,7 +1,7 @@
 {
   disko.devices = {
     disk = {
-      one = {
+      nvme0n1 = {
         type = "disk";
         device = "/dev/nvme0n1";
         content = {
@@ -9,7 +9,7 @@
           partitions = {
             BOOT = {
               size = "1M";
-              type = "EF02"; # for grub MBR
+              type = "EF02";
             };
             ESP = {
               size = "500M";
@@ -36,7 +36,7 @@
           };
         };
       };
-      two = {
+      nvme1n1 = {
         type = "disk";
         device = "/dev/nvme1n1";
         content = {
@@ -44,7 +44,7 @@
           partitions = {
             BOOT = {
               size = "1M";
-              type = "EF02"; # for grub MBR
+              type = "EF02";
             };
             ESP = {
               size = "500M";
