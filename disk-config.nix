@@ -21,7 +21,7 @@
               };
             };
             SWAP = {
-              size = "64G";
+              size = "32G";
               content = {
                 type = "mdraid";
                 name = "plainSwap";
@@ -56,7 +56,7 @@
               };
             };
             SWAP = {
-              size = "64G";
+              size = "32G";
               content = {
                 type = "mdraid";
                 name = "plainSwap";
