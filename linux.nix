@@ -1,5 +1,5 @@
 {
-  secrets,
+  # secrets,
   username,
   hostname,
   pkgs,
@@ -50,10 +50,10 @@
   nix = {
     settings = {
       trusted-users = [username];
-      access-tokens = [
-        "github.com=${secrets.github_token}"
-        # "gitlab.com=OAuth2:${secrets.gitlab_token}"
-      ];
+      # access-tokens = [
+      #   "github.com=${secrets.github_token}"
+      #   "gitlab.com=OAuth2:${secrets.gitlab_token}"
+      # ];
 
       accept-flake-config = true;
       auto-optimise-store = true;

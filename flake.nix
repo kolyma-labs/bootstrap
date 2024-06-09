@@ -27,7 +27,7 @@
   outputs = inputs:
     with inputs; let
       # If theres secrets in the secrets.json file
-      secrets = builtins.fromJSON (builtins.readFile "${self}/secrets.json");
+      # secrets = builtins.fromJSON (builtins.readFile "${self}/secrets.json");
 
       nixpkgsWithOverlays = with inputs; rec {
         config = {
