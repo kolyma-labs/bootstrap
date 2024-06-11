@@ -12,6 +12,8 @@
   boot.loader = {
     grub = {
       enable = true;
+      device = "nodev";
+      devices = [ "/dev/nvme0n1" "/dev/nvme1n1"];
     };
   };
 
