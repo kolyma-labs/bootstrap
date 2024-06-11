@@ -10,14 +10,11 @@
   };
 
   boot.loader = {
-    efi.canTouchEfiVariables = true;
     grub = {
       enable = true;
-      efiSupport = true;
-      useOSProber = true;
       mirroredBoots = [
         {
-          devices = ["/dev/nvme0n1"];
+          devices = ["/dev/nvme0n1" "/dev/nvme1n1"];
           path = "/boot";
         }
       ];
