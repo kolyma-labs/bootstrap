@@ -12,16 +12,6 @@
   boot.loader = {
     grub = {
       enable = true;
-      mirroredBoots = [
-        {
-          devices = ["/dev/nvme0n1"];
-          path = "/boot";
-        }
-        {
-          devices = ["/dev/nvme1n1"];
-          path = "/boot";
-        }
-      ];
     };
   };
 
