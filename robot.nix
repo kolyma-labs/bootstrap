@@ -2,25 +2,31 @@
   imports = [
     ./disk-config.nix
   ];
-  boot.swraid = {
-    enable = true;
-    mdadmConf = ''
-      MAILADDR sakhib@orzklv.uz
-    '';
-  };
 
-  boot.loader = {
-    systemd-boot.enable = false;
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot";
-    };
-    grub = {
-      version = 2;
+  boot = {
+    swraid = {
       enable = true;
-      efiSupport = true;
-      useOSProber = true;
-      device = "nodev";
+      mdadmConf = ''
+        MAILADDR sakhib@orzklv.uz
+      '';
+    };
+    initrd = {
+      kernelModules = ["nvme"];
+      availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid"];
+    };
+    loader = {
+      systemd-boot.enable = false;
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
+      };
+      grub = {
+        version = 2;
+        enable = true;
+        efiSupport = true;
+        useOSProber = true;
+        device = "nodev";
+      };
     };
   };
 
