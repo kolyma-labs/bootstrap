@@ -18,10 +18,8 @@
       systemd-boot.enable = false;
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
       };
       grub = {
-        version = 2;
         enable = true;
         efiSupport = true;
         useOSProber = true;
