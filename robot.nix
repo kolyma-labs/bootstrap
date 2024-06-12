@@ -10,13 +10,15 @@
   };
 
   boot.loader = {
-    systemd-boot.enable = true;
+    systemd-boot.enable = false;
     efi.canTouchEfiVariables = true;
-    # grub = {
-    #   enable = true;
-    #   efiSupport = true;
-    #   devices = ["nodev"];
-    # };
+    grub = {
+      enable = true;
+      device = "nodev";
+      efiSupport = true;
+      useOSProber = true;
+      efiInstallAsRemovable = true;
+    };
   };
 
   services.openssh = {
