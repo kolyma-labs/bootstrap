@@ -10,17 +10,13 @@
   };
 
   boot.loader = {
-    systemd-boot.enable = false;
-
-    efi = {
-      canTouchEfiVariables = true;
-    };
-
-    grub = {
-      enable = true;
-      efiSupport = true;
-      devices = ["nodev"];
-    };
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+    # grub = {
+    #   enable = true;
+    #   efiSupport = true;
+    #   devices = ["nodev"];
+    # };
   };
 
   services.openssh = {
