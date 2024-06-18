@@ -1,7 +1,18 @@
+# /dev/nvme0n1
+# /dev/nvme1n1
+#
+# Disk
+# |- BOOT
+# |- ESP
+# |  |- mdraid
+# |- SWAP
+# |  |- mdraid
+# |- ROOT
+#    |- mdraid
 {
   disko.devices = {
     disk = {
-      nvme0n1 = {
+      one = {
         type = "disk";
         device = "/dev/nvme0n1";
         content = {
@@ -10,12 +21,10 @@
             BOOT = {
               size = "1M";
               type = "EF02";
-              priority = 1;
             };
             ESP = {
               size = "500M";
               type = "EF00";
-              priority = 2;
               content = {
                 type = "mdraid";
                 name = "boot";
@@ -28,25 +37,26 @@
                 name = "swap";
               };
             };
-            ROOT = {
+            mdadm = {
               size = "100%";
               content = {
                 type = "mdraid";
-                name = "root";
+                name = "raid1";
               };
             };
           };
         };
       };
-      nvme1n1 = {
+      two = {
         type = "disk";
         device = "/dev/nvme1n1";
         content = {
           type = "gpt";
           partitions = {
-            BOOT = {
+            boot = {
               size = "1M";
               type = "EF02";
+              priority = 1; # Needs to be first partition
             };
             ESP = {
               size = "500M";
@@ -63,11 +73,11 @@
                 name = "swap";
               };
             };
-            ROOT = {
+            mdadm = {
               size = "100%";
               content = {
                 type = "mdraid";
-                name = "root";
+                name = "raid1";
               };
             };
           };
@@ -75,21 +85,6 @@
       };
     };
     mdadm = {
-      root = {
-        type = "mdadm";
-        level = 1;
-        content = {
-          type = "gpt";
-          partitions.primary = {
-            size = "100%";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/";
-            };
-          };
-        };
-      };
       boot = {
         type = "mdadm";
         level = 1;
@@ -105,6 +100,21 @@
         level = 1;
         content = {
           type = "swap";
+        };
+      };
+      raid1 = {
+        type = "mdadm";
+        level = 1;
+        content = {
+          type = "gpt";
+          partitions.primary = {
+            size = "100%";
+            content = {
+              type = "filesystem";
+              format = "ext4";
+              mountpoint = "/";
+            };
+          };
         };
       };
     };
