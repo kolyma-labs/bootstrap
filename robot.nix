@@ -1,5 +1,7 @@
-{
+{ modulesPath, config, lib, pkgs, ... }: {
   imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    (modulesPath + "/profiles/qemu-guest.nix")  
     ./disk-config.nix
   ];
 
@@ -10,20 +12,10 @@
         MAILADDR sakhib@orzklv.uz
       '';
     };
-    initrd = {
-      kernelModules = ["nvme"];
-      availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid"];
-    };
     loader = {
-      systemd-boot.enable = false;
-      efi = {
-        canTouchEfiVariables = true;
-      };
       grub = {
-        enable = true;
         efiSupport = true;
-        useOSProber = true;
-        device = "nodev";
+        efiInstallAsRemovable = true;
       };
     };
   };
