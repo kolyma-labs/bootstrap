@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-    <h3 align="center">NixOS images created with Kolyma's specifications.</h3>
+    <h3 align="center">Bootstraping server starting from partition to configs.</h3>
 </p>
 
 <p align="center">
