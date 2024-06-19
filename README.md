@@ -17,8 +17,6 @@ When you buy a server, specifically from Hetzner, you are not given the option t
 
 ## Quickstart
 
-[![Watch the walkthrough video](https://img.youtube.com/vi/nlX8g0NXW1M/hqdefault.jpg)](https://www.youtube.com/watch?v=nlX8g0NXW1M)
-
 * Order a server on Hetzner Robot
     * For this tutorial, I am using an [AX41-NVMe](https://www.hetzner.com/dedicated-rootserver/ax41-nvme)
     * The `disk-config.nix` file sets software RAID 1 on the 2x 512GB NVMe SSDs (just as the delivered server has)
