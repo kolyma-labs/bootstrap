@@ -1,4 +1,19 @@
-# nixos-hetzner-robot-starter
+<p align="center">
+    <img src=".github/assets/header.png" alt="Kolyma's {Bootstrap}">
+</p>
+
+<p align="center">
+    <h3 align="center">NixOS images created with Kolyma's specifications.</h3>
+</p>
+
+<p align="center">
+    <img align="center" src="https://img.shields.io/github/languages/top/kolyma-labs/bootstrap?style=flat&logo=nixos&logoColor=ffffff&labelColor=242424&color=242424" alt="Top Used Language">
+    <a href="https://github.com/kolyma-labs/bootstrap/actions/workflows/build.yml"><img align="center" src="https://img.shields.io/github/actions/workflow/status/kolyma-labs/bootstrap/build.yml?style=flat&logo=github&logoColor=ffffff&labelColor=242424&color=242424" alt="Test CI"></a>
+</p>
+
+# About
+
+When you buy a server, specifically from Hetzner, you are not given the option to install NixOS. This repository provides an easy way to install NixOS on a Hetzner server using the [nixos-anywhere](https://github.com/nix-community/nixos-anywhere) tool.
 
 ## Quickstart
 
@@ -70,3 +85,11 @@ this project uses a flat layout without any nesting or modularization.
     * NixOS options are set here
 * `home.nix` is where packages, dotfiles, terminal tools, environment variables
   and aliases are configured
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](license) file for details.
+
+<p align="center">
+    <img src=".github/assets/footer.png" alt="Kolyma's {Installer}">
+</p>
