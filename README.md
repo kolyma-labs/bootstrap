@@ -18,7 +18,7 @@ When you buy a server, specifically from Hetzner, you are not given the option t
 ## Quickstart
 
 * Order a server on Hetzner Robot
-    * For this tutorial, I am using an [AX41-NVMe](https://www.hetzner.com/dedicated-rootserver/ax41-nvme)
+    * For this guide, I used an [AX41-NVMe](https://www.hetzner.com/dedicated-rootserver/ax41-nvme) and also tested on a [AX52](https://www.hetzner.com/dedicated-rootserver/ax52)
     * The `disk-config.nix` file sets software RAID 1 on the 2x 512GB NVMe SSDs (just as the delivered server has)
 * Set your SSH public key in `robot.nix` and `linux.nix`
 * Go through all the `FIXME:` notices in this repo and make changes wherever
