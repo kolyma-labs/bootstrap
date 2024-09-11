@@ -1,15 +1,14 @@
-{
-  lib,
-  modulesPath,
-  ...
+{ lib
+, modulesPath
+, ...
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "sd_mod" "nvme"];
-  boot.initrd.kernelModules = [];
-  boot.extraModulePackages = [];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "sd_mod" "nvme" ];
+  boot.initrd.kernelModules = [ ];
+  boot.extraModulePackages = [ ];
 
   networking.useNetworkd = true;
   networking.useDHCP = false;
@@ -22,5 +21,5 @@
     networkConfig.IPv6AcceptRA = "no";
   };
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }

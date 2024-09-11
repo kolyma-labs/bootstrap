@@ -62,15 +62,17 @@
         };
       };
 
-      mkNixosConfiguration = {
-        system ? "x86_64-linux",
-        hostname,
-        username,
-        args ? {},
-        modules,
-      }: let
-        specialArgs = argDefaults // {inherit hostname username;} // args;
-      in
+      mkNixosConfiguration =
+        { system ? "x86_64-linux"
+        , hostname
+        , username
+        , args ? { }
+        , modules
+        ,
+        }:
+        let
+          specialArgs = argDefaults // { inherit hostname username; } // args;
+        in
         nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
           modules =
@@ -80,14 +82,18 @@
             ]
             ++ modules;
         };
-    in {
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
+    in
+    {
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
+      formatter.aarch64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
+      formatter.aarch64-darwin = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
 
       nixosConfigurations.robot = mkNixosConfiguration {
         hostname = "robot";
+        system = "aarch64-linux";
         username = "sakhib";
         modules = [
-          ./amd.nix
+          # ./amd.nix
           disko.nixosModules.disko
           ./robot.nix
           ./linux.nix
@@ -102,9 +108,9 @@
         remoteBuild = true;
         nodes = {
           robot = {
-            hostname = "95.216.248.236";
+            hostname = "65.109.74.214";
             profiles.system = {
-              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.robot;
+              path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.robot;
             };
           };
         };
