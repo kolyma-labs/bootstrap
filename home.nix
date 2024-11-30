@@ -49,7 +49,7 @@ in {
     nix-index-database.hmModules.nix-index
   ];
 
-  home.stateVersion = "24.05";
+  home.stateVersion = "24.11";
 
   home = {
     username = "${username}";
@@ -73,7 +73,7 @@ in {
     nix-index-database.comma.enable = true;
 
     starship.enable = true;
-    
+
     direnv.enable = true;
     direnv.enableZshIntegration = true;
     direnv.nix-direnv.enable = true;
