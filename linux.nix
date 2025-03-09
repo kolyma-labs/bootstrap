@@ -17,7 +17,6 @@
   programs.zsh.enable = true;
   environment.pathsToLink = ["/share/zsh"];
   environment.shells = [pkgs.zsh];
-
   environment.enableAllTerminfo = true;
 
   security.sudo.wheelNeedsPassword = false;
@@ -71,7 +70,7 @@
       "/nix/var/nix/profiles/per-user/root/channels"
     ];
 
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.stable;
     extraOptions = ''experimental-features = nix-command flakes'';
 
     gc = {

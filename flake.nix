@@ -1,34 +1,46 @@
 {
   description = "NixOS configuration for affecting servers";
 
-  # NixOS 24.11
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-  inputs.nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+  inputs = {
+    # NixOS 24.11 & Unstable
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-  # Home Manager
-  inputs.home-manager.url = "github:nix-community/home-manager/release-24.11";
-  inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # Home Manager
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-  # Nix User Repository
-  inputs.nur.url = "github:nix-community/NUR";
+    # Flake utils for eachSystem
+    flake-utils.url = "github:numtide/flake-utils";
 
-  # Nix Index Database
-  inputs.nix-index-database.url = "github:Mic92/nix-index-database";
-  inputs.nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+    # Nix User Repository
+    nur.url = "github:nix-community/NUR";
 
-  # Disko
-  inputs.disko.url = "github:nix-community/disko";
-  inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
+    # Nix Index Database
+    nix-index-database = {
+      url = "github:Mic92/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-  # NixOS config deployer
-  inputs.deploy-rs.url = "github:serokell/deploy-rs";
-  inputs.deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+    # Disko
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # NixOS config deployer
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 
   outputs = inputs:
     with inputs; let
       # If theres secrets in the secrets.json file
       # secrets = builtins.fromJSON (builtins.readFile "${self}/secrets.json");
-
       nixpkgsWithOverlays = with inputs; rec {
         config = {
           allowUnfree = true;
@@ -62,17 +74,15 @@
         };
       };
 
-      mkNixosConfiguration =
-        { system ? "x86_64-linux"
-        , hostname
-        , username
-        , args ? { }
-        , modules
-        ,
-        }:
-        let
-          specialArgs = argDefaults // { inherit hostname username; } // args;
-        in
+      mkNixosConfiguration = {
+        system ? "x86_64-linux",
+        hostname,
+        username,
+        args ? {},
+        modules,
+      }: let
+        specialArgs = argDefaults // {inherit hostname username;} // args;
+      in
         nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
           modules =
@@ -83,40 +93,51 @@
             ++ modules;
         };
     in
-    {
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
-      formatter.aarch64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
-      formatter.aarch64-darwin = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
+      {
+        nixosConfigurations.robot = mkNixosConfiguration {
+          hostname = "robot";
+          system = "aarch64-linux";
+          username = "sakhib";
+          modules = [
+            disko.nixosModules.disko
+            # ./amd.nix
+            ./robot.nix
+            ./linux.nix
+          ];
+        };
 
-      nixosConfigurations.robot = mkNixosConfiguration {
-        hostname = "robot";
-        system = "aarch64-linux";
-        username = "sakhib";
-        modules = [
-          # ./amd.nix
-          disko.nixosModules.disko
-          ./robot.nix
-          ./linux.nix
-        ];
-      };
-
-      deploy = {
-        sshUser = "sakhib";
-        user = "sakhib";
-        autoRollback = false;
-        magicRollback = false;
-        remoteBuild = true;
-        nodes = {
-          robot = {
-            hostname = "65.109.74.214";
-            profiles.system = {
-              path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.robot;
+        deploy = {
+          sshUser = "sakhib";
+          user = "sakhib";
+          autoRollback = false;
+          magicRollback = false;
+          remoteBuild = true;
+          nodes = {
+            robot = {
+              hostname = "65.109.74.214";
+              profiles.system = {
+                path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.robot;
+              };
             };
           };
         };
-      };
 
-      # This is highly advised, and will prevent many possible mistakes
-      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
-    };
+        # This is highly advised, and will prevent many possible mistakes
+        checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+      }
+      // inputs.flake-utils.lib.eachDefaultSystem (
+        system: let
+          # Packages for the current <arch>
+          pkgs = inputs.nixpkgs.legacyPackages.${system};
+        in
+          # Nixpkgs packages for the current system
+          {
+            # Development shells
+            devShells.default = import ./shell.nix {inherit pkgs;};
+
+            # Formatter for your nix files, available through 'nix fmt'
+            # Other options beside 'alejandra' include 'nixpkgs-fmt'
+            formatter = pkgs.alejandra;
+          }
+      );
 }

@@ -33,7 +33,6 @@
   ];
 
   stable-packages = with pkgs; [
-
     # key tools
     gnumake # for lunarvim
     gcc # for lunarvim
@@ -49,45 +48,48 @@ in {
     nix-index-database.hmModules.nix-index
   ];
 
-  home.stateVersion = "24.11";
-
   home = {
+    stateVersion = "24.11";
     username = "${username}";
     homeDirectory = "/home/${username}";
 
     sessionVariables.EDITOR = "helix";
     sessionVariables.SHELL = "/etc/profiles/per-user/${username}/bin/zsh";
+
+    packages =
+      stable-packages
+      ++ unstable-packages
+      ++ [];
   };
-
-  home.packages =
-    stable-packages
-    ++ unstable-packages
-    ++
-    [];
-
 
   programs = {
     home-manager.enable = true;
-    nix-index.enable = true;
-    nix-index.enableZshIntegration = true;
+
+    nix-index = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
     nix-index-database.comma.enable = true;
 
     starship.enable = true;
 
-    direnv.enable = true;
-    direnv.enableZshIntegration = true;
-    direnv.nix-direnv.enable = true;
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
 
     zsh = {
       enable = true;
       autocd = true;
-      autosuggestion.enable = true;
-      enableCompletion = true;
       history.size = 10000;
       history.save = 10000;
-      history.expireDuplicatesFirst = true;
+      enableCompletion = true;
       history.ignoreDups = true;
       history.ignoreSpace = true;
+      autosuggestion.enable = true;
+      history.expireDuplicatesFirst = true;
       historySubstringSearch.enable = true;
     };
   };

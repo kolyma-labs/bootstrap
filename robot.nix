@@ -1,7 +1,13 @@
-{ modulesPath, config, lib, pkgs, ... }: {
+{
+  modulesPath,
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    (modulesPath + "/profiles/qemu-guest.nix")  
+    (modulesPath + "/profiles/qemu-guest.nix")
     ./disk-config.nix
   ];
 
@@ -9,7 +15,7 @@
     swraid = {
       enable = true;
       mdadmConf = ''
-        MAILADDR sakhib@orzklv.uz
+        MAILADDR support@kolyma.uz
       '';
     };
     loader = {
