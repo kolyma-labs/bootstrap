@@ -48,7 +48,7 @@
           ];
         };
         overlays = [
-          nur.overlay
+          nur.overlay.default
           (_final: prev: {
             # this allows us to reference pkgs.unstable
             unstable = import nixpkgs-unstable {
