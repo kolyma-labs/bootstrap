@@ -17,21 +17,24 @@ When you buy a server, specifically from Hetzner, you are not given the option t
 
 ## Quickstart
 
-* Order a server on Hetzner Robot
-    * For this guide, I used an [AX41-NVMe](https://www.hetzner.com/dedicated-rootserver/ax41-nvme) and also tested on a [AX52](https://www.hetzner.com/dedicated-rootserver/ax52)
-    * The `disk-config.nix` file sets software RAID 1 on the 2x 512GB NVMe SSDs (just as the delivered server has)
-* Set your SSH public key in `robot.nix` and `linux.nix`
-* Go through all the `FIXME:` notices in this repo and make changes wherever
+- Order a server on Hetzner Robot
+  - For this guide, I used an [AX41-NVMe](https://www.hetzner.com/dedicated-rootserver/ax41-nvme) and also tested on a [AX52](https://www.hetzner.com/dedicated-rootserver/ax52)
+  - The `disk-config.nix` file sets software RAID 1 on the 2x 512GB NVMe SSDs (just as the delivered server has)
+- Set your SSH public key in `robot.nix` and `linux.nix`
+- Go through all the `FIXME:` notices in this repo and make changes wherever
   you want
-* Make sure you have activated the [Hetzner Rescue System](https://docs.hetzner.com/robot/dedicated-server/troubleshooting/hetzner-rescue-system/) by enabling it and then doing an automated hardware reset on the Robot web console
-* Run [`nixos-anywhere`](https://github.com/nix-community/nixos-anywhere)
+- Make sure you have activated the [Hetzner Rescue System](https://docs.hetzner.com/robot/dedicated-server/troubleshooting/hetzner-rescue-system/) by enabling it and then doing an automated hardware reset on the Robot web console
+- Run [`nixos-anywhere`](https://github.com/nix-community/nixos-anywhere)
   against `root@<server-ip-address>`
+
 ```bash
-nix run github:numtide/nixos-anywhere -- --flake .#robot root@<server-ip-address>
+nix run github:numtide/nixos-anywhere -- --flake .#robot --target-host root@<server-ip-address> --disko-mode disko --option tarball-ttl 0
 ```
-* Wait for the installation to complete
-* Try to SSH into the server with `ssh <your-username-selected-in-flake.nix>@<server-ip-address>`
-* You'll probably receive an error like the one below; follow the steps to remove the ip address from `known_hosts`
+
+- Wait for the installation to complete
+- Try to SSH into the server with `ssh <your-username-selected-in-flake.nix>@<server-ip-address>`
+- You'll probably receive an error like the one below; follow the steps to remove the ip address from `known_hosts`
+
 ```
   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
@@ -49,8 +52,10 @@ Offending ECDSA key in ~/.ssh/known_hosts:6
 Host key for <ip_address> has changed and you have requested strict checking.
 Host key verification failed.
 ```
-* Now you can SSH into the server
-* In a local terminal window, you can apply updated configurations to the remote server
+
+- Now you can SSH into the server
+- In a local terminal window, you can apply updated configurations to the remote server
+
 ```bash
 nix run github:serokell/deploy-rs -- --remote-build -s .#robot
 ```
@@ -62,26 +67,26 @@ Note: If developing in Rust, you'll still be managing your toolchains and compon
 In order to keep the template as approachable as possible for new NixOS users,
 this project uses a flat layout without any nesting or modularization.
 
-* `flake.nix` is where dependencies are specified
-    * `nixpkgs` is the current release of NixOS
-    * `nixpkgs-unstable` is the current trunk branch of NixOS (ie. all the
-      latest packages)
-    * `home-manager` is used to manage everything related to your home
-      directory (dotfiles etc.)
-    * `nur` is the community-maintained [Nix User
-      Repositories](https://nur.nix-community.org/) for packages that may not
-      be available in the NixOS repository
-    * `nix-index-database` tells you how to install a package when you run a
-      command which requires a binary not in the `$PATH`
-    * `disko` is used to prepare VM storage for NixOS
-* `robot.nix` is where OpenSSH is configured and where the `root` SSH public
+- `flake.nix` is where dependencies are specified
+  - `nixpkgs` is the current release of NixOS
+  - `nixpkgs-unstable` is the current trunk branch of NixOS (ie. all the
+    latest packages)
+  - `home-manager` is used to manage everything related to your home
+    directory (dotfiles etc.)
+  - `nur` is the community-maintained [Nix User
+    Repositories](https://nur.nix-community.org/) for packages that may not
+    be available in the NixOS repository
+  - `nix-index-database` tells you how to install a package when you run a
+    command which requires a binary not in the `$PATH`
+  - `disko` is used to prepare VM storage for NixOS
+- `robot.nix` is where OpenSSH is configured and where the `root` SSH public
   key is set
-* `linux.nix` is where the server is configured
-    * The hostname is set here
-    * The default shell is set here
-    * User groups are set here
-    * NixOS options are set here
-* `home.nix` is where packages, dotfiles, terminal tools, environment variables
+- `linux.nix` is where the server is configured
+  - The hostname is set here
+  - The default shell is set here
+  - User groups are set here
+  - NixOS options are set here
+- `home.nix` is where packages, dotfiles, terminal tools, environment variables
   and aliases are configured
 
 ## License
