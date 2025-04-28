@@ -1,9 +1,9 @@
-name: "build"
+name: Test CI
 
 on: [push, pull_request]
 
 jobs:
-  build:
+  test:
     runs-on: self-hosted
     steps:
       - name: Clone the repo
