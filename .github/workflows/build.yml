@@ -1,18 +1,13 @@
 name: "build"
 
-on:
-  push:
-  pull_request:
+on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Clone the repo
         uses: actions/checkout@v4
-
-      - name: Install Nix package manager
-        uses: DeterminateSystems/nix-installer-action@main
 
       - name: Check flake configurations
         run: nix flake check --all-systems --show-trace
