@@ -13,4 +13,4 @@ jobs:
         run: nix flake check --all-systems --show-trace
 
       - name: Attempt to build configurations
-        run: nix build -L .#deploy.nodes.robot.profiles.system.path
+        run: nix build -L .#nixosConfigurations."robot".config.system.build.Script # .#deploy.nodes.robot.profiles.system.path
