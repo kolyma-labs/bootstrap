@@ -21,6 +21,4 @@
     networkConfig.Gateway = "fe80::1";
     networkConfig.IPv6AcceptRA = "no";
   };
-
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }

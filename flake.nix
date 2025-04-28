@@ -100,7 +100,7 @@
           username = "sakhib";
           modules = [
             disko.nixosModules.disko
-            # ./amd.nix
+            ./ampere.nix
             ./robot.nix
             ./linux.nix
           ];
@@ -114,7 +114,7 @@
           remoteBuild = true;
           nodes = {
             robot = {
-              hostname = "65.109.74.214";
+              hostname = "116.202.247.9";
               profiles.system = {
                 path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.robot;
               };

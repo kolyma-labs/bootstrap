@@ -13,7 +13,7 @@
               priority = 1;
             };
             ESP = {
-              size = "500M";
+              size = "2G";
               type = "EF00";
               priority = 2;
               content = {
@@ -49,7 +49,7 @@
               type = "EF02";
             };
             ESP = {
-              size = "500M";
+              size = "2G";
               type = "EF00";
               content = {
                 type = "mdraid";
