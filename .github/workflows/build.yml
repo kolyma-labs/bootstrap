@@ -8,6 +8,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@main
-      - run: nix flake check --all-systems --show-trace
+      - name: Clone the repo
+        uses: actions/checkout@v4
+
+      - name: Install Nix package manager
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Check flake configurations
+        run: nix flake check --all-systems --show-trace
+
+      - name: Attempt to build configurations
+        run: nix build -L .#deploy.nodes.robot.profiles.system.path
