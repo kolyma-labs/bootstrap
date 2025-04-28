@@ -15,9 +15,6 @@
     # Flake utils for eachSystem
     flake-utils.url = "github:numtide/flake-utils";
 
-    # Nix User Repository
-    nur.url = "github:nix-community/NUR";
-
     # Nix Index Database
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
@@ -48,7 +45,6 @@
           ];
         };
         overlays = [
-          nur.overlay.default
           (_final: prev: {
             # this allows us to reference pkgs.unstable
             unstable = import nixpkgs-unstable {
