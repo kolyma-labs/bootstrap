@@ -11,7 +11,7 @@
     <a href="https://github.com/kolyma-labs/bootstrap/actions/workflows/build.yml"><img align="center" src="https://img.shields.io/github/actions/workflow/status/kolyma-labs/bootstrap/build.yml?style=flat&logo=github&logoColor=ffffff&labelColor=242424&color=242424" alt="Test CI"></a>
 </p>
 
-# About
+## About
 
 When you buy a server, specifically from Hetzner, you are not given the option to install NixOS. This repository provides an easy way to install NixOS on a Hetzner server using the [nixos-anywhere](https://github.com/nix-community/nixos-anywhere) tool.
 
